@@ -30,7 +30,7 @@ class FloorPlan extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //set frame dimensions
-        this.setSize(800, 600);
+        this.setSize(MAX_X, MAX_Y);
 
         //set to fullscreen
 //        this.setSize(MAX_X,MAX_Y);
