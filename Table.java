@@ -48,4 +48,20 @@ class Table {
     public void addStudent(Student s) {
         students.add(s);
     }
+
+    public boolean isFull() {
+        if (students.size() == size) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean containsStudent(Student s) { 
+        if (students.contains(s)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
