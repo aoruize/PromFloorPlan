@@ -1,0 +1,6 @@
+Features to add:
+
+- admin can set number of seats at each table
+- pan the gui
+- scroll in and out for zoom
+- coloured graphics

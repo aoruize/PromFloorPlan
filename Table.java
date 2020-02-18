@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Table {
 
     private int size;
@@ -6,11 +8,16 @@ class Table {
     private ArrayList<Student> students;
 
     Table(int size, int x, int y) {
-        
+        setX(x);
+        setY(y);
+        setSize(size);
     }
 
-    Table(int size, int x, int y, String[] students) {
-
+    Table(int size, int x, int y, ArrayList<Student> students) {
+        setX(x);
+        setY(y);
+        setSize(size);
+        setStudents(students);
     }
 
     public int getSize() {

@@ -1,11 +1,8 @@
-/**
- * This template can be used as reference or a starting point for the Shape Game
- **/
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 class FloorPlan extends JFrame {
     private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
