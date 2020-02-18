@@ -43,7 +43,7 @@ class Student {
         this.paid = paid;
     }
 
-    public boolean getPaid() {
+    public boolean hasPaid() {
         return paid;
     }
 

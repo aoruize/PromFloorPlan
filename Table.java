@@ -56,6 +56,10 @@ class Table {
         students.add(s);
     }
 
+    public void removeStudent(Student s) {
+        students.remove(s);
+    }
+
     public boolean isFull() {
         if (students.size() == size) {
             return true;
