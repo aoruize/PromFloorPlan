@@ -4,3 +4,8 @@ Features to add:
 - pan the gui
 - scroll in and out for zoom
 - coloured graphics
+
+For reference:
+https://cdn0.capterra-static.com/screenshots/2120569/103486.png
+https://cdn0.capterra-static.com/screenshots/2120569/103487.png
+https://cdn0.capterra-static.com/screenshots/2120569/103488.png
