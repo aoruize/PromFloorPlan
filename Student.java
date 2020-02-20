@@ -47,4 +47,13 @@ class Student {
         return paid;
     }
 
+    public boolean equals(Student s) {
+        if (this.getId().equals(s.getId()) && this.getName().equals(s.getName())) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }

@@ -4,19 +4,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-class FloorPlan extends JFrame {
+class FloorPlanSystem extends JFrame {
     private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
     private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
-    static FloorPlan floor;
+    static FloorPlanSystem floor;
     private ProgramAreaPanel panel;
 
     //main
     public static void main(String[] args) {
-        floor = new FloorPlan(); 
+        floor = new FloorPlanSystem(); 
     }    
     
-    FloorPlan() {
-        super("FloorPlan");
+    FloorPlanSystem() {
+        super("FloorPlanSystem");
 
         //create enemies and player
 
