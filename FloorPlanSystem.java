@@ -1,46 +1,85 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 class FloorPlanSystem extends JFrame {
-    private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
-    private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
+    //private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
+    //private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
+    private final int MAX_X = 1920;
+    private final int MAX_Y = 1080;
     static FloorPlanSystem floor;
-    private ProgramAreaPanel panel;
+    static ProgramAreaPanel panel;
+    static ArrayList<Table> tables;
+    static FloorView floorView;
+    static TableView tableView;
+    static Table table;
+    static JButton zoomIn, zoomOut;
 
     //main
     public static void main(String[] args) {
-        floor = new FloorPlanSystem(); 
+        tables = new ArrayList<Table>();
+        for (int i = 0; i<56; i++){
+            Table t = new Table(1,1,1);
+            tables.add(t);
+        }
+        /*
+        table = new Table(5,0,0);
+        ArrayList<Student> students = new ArrayList<Student>();
+        for (int i = 0; i<5; i++){
+            Student s = new Student("","");
+            students.add(s);
+        }
+        table.setStudents(students);
+        */
+        floor = new FloorPlanSystem();
     }    
     
     FloorPlanSystem() {
         super("FloorPlanSystem");
 
-        //create enemies and player
 
+
+        floorView = new FloorView(MAX_X, MAX_Y, tables);
+        //tableView = new TableView(MAX_X, MAX_Y, table);
         //create the panel and add it to the frame
         panel = new ProgramAreaPanel();
 
+        //button stuff
+        zoomIn = new JButton("Zoom In");
+        zoomIn.addActionListener(new ActionListener() {
+                                        public void actionPerformed(ActionEvent e) {
+                                             floorView.trans.changeZoom(2);
+                                        }
+                                        });
+        zoomOut = new JButton("Zoom Out");
+        zoomOut.addActionListener(new ActionListener() {
+                                        public void actionPerformed(ActionEvent e) {
+                                            floorView.trans.changeZoom(0.5);
+                                        }
+                                        });
+        //
+        panel.add(zoomIn);
+        panel.add(zoomOut);
+
         this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
+
+
         //set frame dimensions
         this.setSize(MAX_X, MAX_Y);
-
-        //set to fullscreen
-//        this.setSize(MAX_X,MAX_Y);
-        //or
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //remove borders
-//        this.setUndecorated(true);
         
         //create and attach a key listener
         this.addKeyListener(new MyKeyListener());
         //make the frame active and visible
         this.requestFocusInWindow();
         this.setVisible(true);
+
+
     }
 
     void redraw () {
@@ -54,22 +93,8 @@ class FloorPlanSystem extends JFrame {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             setDoubleBuffered(true); 
-            
-            //move enemies
-            
-            //check for collision
-            
-            //draw Stuff Here
-
-    //example drawing:
-            //change color
-            g.setColor(Color.BLUE);
-            //draw Rectangle
-            g.fillOval(50, 100, 50, 50);
-            //change color
-            g.setColor(new Color(255, 0, 255));
-            //draw ellipse
-            g.fillRect(200, 200, 20, 20);
+            floorView.draw(g);
+            //tableView.draw(g);
             
             repaint();
         }
@@ -81,23 +106,14 @@ class FloorPlanSystem extends JFrame {
         @Override
         public void keyTyped(KeyEvent keyEvent) {
             char keyChar = keyEvent.getKeyChar();
-            if(keyChar == 'a' ){   
-                System.out.println("move left");     
-            } else if(keyChar == 'd' ){
-                System.out.println("move right"); ;
-            } 
+
         }
         
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             int keyCode = keyEvent.getKeyCode();
             if (keyCode == KeyEvent.VK_LEFT){
-                System.out.println("move left");
-            } else if (keyCode == KeyEvent.VK_RIGHT){
-                System.out.println("move right");
-            } else if (keyCode == KeyEvent.VK_ESCAPE){
-                System.out.println("Quitting!"); 
-                game.dispose(); //close the frame & quit
+                System.out.println("");
             }
         }
         
