@@ -6,6 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+/* All ticketing system requirements: bit.ly/TicketSys
+*/
+
 class FloorPlanSystem extends JFrame {
     //private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
     //private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
@@ -22,7 +25,7 @@ class FloorPlanSystem extends JFrame {
     //main
     public static void main(String[] args) {
         tables = new ArrayList<Table>();
-        for (int i = 0; i<56; i++){
+        for (int i = 0; i<250; i++){
             Table t = new Table(1,1,1);
             tables.add(t);
         }
