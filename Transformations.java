@@ -13,17 +13,17 @@ public class Transformations {
         this.zoomLevel = 1;
     }
     public void changeTranslate (int xTrans, int yTrans){
-        this.xTransform += xTrans;
-        this.yTransform += yTrans;
+        xTransform += xTrans/zoomLevel;
+        yTransform += yTrans/zoomLevel;
     }
     public void changeZoom(double zoom){
         zoomLevel *= zoom;
     }
     public int applyXTranslate(int xCoord){
-        return (int)(xCentre + zoomLevel*(xCoord-xCentre));
+        return (int)(xCentre + zoomLevel*(xCoord-xCentre) + xTransform/zoomLevel);
     }
     public int applyYTranslate(int yCoord){
-        return (int)(yCentre + zoomLevel*(yCoord-yCentre));
+        return (int)(yCentre + zoomLevel*(yCoord-yCentre) + yTransform/zoomLevel);
     }
     public int applyRadiusChange(int radius){
         return (int)(radius*zoomLevel);
