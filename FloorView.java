@@ -14,13 +14,24 @@ class FloorView {
         tableRadius = width/(xSize+1)/4;
     }
     public void draw(Graphics g){
-        g.setColor(Color.BLACK);
+
         for (int i = 0; i < tables.size(); i++){
-            //draw Rectangle
+            g.setColor(Color.BLACK);
+            //Table//
             int xCoord = trans.applyXTranslate((i%xSize + 1)*(width/(xSize+1)));
             int yCoord = trans.applyYTranslate((i/xSize + 1)*(height/(ySize+1)));
             int newTableRadius = trans.applyRadiusChange(tableRadius);
             MyUtil.drawCircle(g,xCoord, yCoord, newTableRadius);
+            ////
+
+            //Seats//
+            ArrayList<Student> students;
+            students = tables.get(i).getStudents();
+            g.setColor(Color.GREEN);
+            for (int j = 0; j < students.size(); j++){
+                MyUtil.drawCircle(g,(int)(xCoord + newTableRadius * Math.cos(j* 2*Math.PI/students.size())), (int)(yCoord + newTableRadius* Math.sin(j* 2*Math.PI/students.size())), newTableRadius/5);
+            }
+            ////
         }
     }
 }

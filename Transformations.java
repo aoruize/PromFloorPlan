@@ -19,11 +19,18 @@ public class Transformations {
     public void changeZoom(double zoom){
         zoomLevel *= zoom;
     }
+    public void changeZoom(double zoom, int xLoc, int yLoc){
+        zoomLevel *= zoom;
+        xCentre = (int)(xCentre + (xLoc-xCentre)/zoom);
+        yCentre = (int)(yCentre + (yLoc-yCentre)/zoom);
+    }
+
+
     public int applyXTranslate(int xCoord){
-        return (int)(xCentre + zoomLevel*(xCoord-xCentre) + xTransform/zoomLevel);
+        return (int)(xCentre + zoomLevel*(xCoord-xCentre) + xTransform*zoomLevel);
     }
     public int applyYTranslate(int yCoord){
-        return (int)(yCentre + zoomLevel*(yCoord-yCentre) + yTransform/zoomLevel);
+        return (int)(yCentre + zoomLevel*(yCoord-yCentre) + yTransform*zoomLevel);
     }
     public int applyRadiusChange(int radius){
         return (int)(radius*zoomLevel);

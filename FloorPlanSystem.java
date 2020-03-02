@@ -12,78 +12,42 @@ class FloorPlanSystem extends JFrame {
     private final int MAX_X = 1920;
     private final int MAX_Y = 1080;
     static FloorPlanSystem floor;
-    static ProgramAreaPanel panel;
+    static FloorViewPanel floorViewPanel;
+    static ControlPanel controlPanel;
     static ArrayList<Table> tables;
     static FloorView floorView;
     static TableView tableView;
     static Table table;
-    static JButton zoomIn, zoomOut, moveLeft, moveRight;
 
     //main
     public static void main(String[] args) {
         tables = new ArrayList<Table>();
-        for (int i = 0; i<250; i++){
+        for (int i = 0; i<45; i++){
             Table t = new Table(1,1,1);
+            ArrayList<Student> students = new ArrayList<Student>();
+            for (int j = 0; j<9; j++){
+                Student s = new Student("","");
+                students.add(s);
+            }
+            t.setStudents(students);
             tables.add(t);
         }
-        /*
-        table = new Table(5,0,0);
-        ArrayList<Student> students = new ArrayList<Student>();
-        for (int i = 0; i<5; i++){
-            Student s = new Student("","");
-            students.add(s);
-        }
-        table.setStudents(students);
-        */
+
         floor = new FloorPlanSystem();
     }    
     
     FloorPlanSystem() {
         super("FloorPlanSystem");
-
-
-
         floorView = new FloorView(MAX_X, MAX_Y, tables);
-        //tableView = new TableView(MAX_X, MAX_Y, table);
-        //create the panel and add it to the frame
-        panel = new ProgramAreaPanel();
+        //create a cardlayout top layer frame and add it to the frame
+        JPanel cardContentPane = new JPanel(new CardLayout());
+        floorViewPanel = new FloorViewPanel();
+        controlPanel = new ControlPanel();
+        floorViewPanel.add(controlPanel);
+        this.setContentPane(cardContentPane);
+        this.getContentPane().add(floorViewPanel, "floorViewPanel");
 
-        //button stuff
-        zoomIn = new JButton("Zoom In");
-        zoomIn.addActionListener(new ActionListener() {
-                                        public void actionPerformed(ActionEvent e) {
-                                             floorView.trans.changeZoom(2);
-                                        }
-                                        });
-        zoomOut = new JButton("Zoom Out");
-        zoomOut.addActionListener(new ActionListener() {
-                                        public void actionPerformed(ActionEvent e) {
-                                            floorView.trans.changeZoom(0.5);
-                                        }
-                                        });
-        moveLeft = new JButton("Move Left");
-        moveLeft.addActionListener(new ActionListener() {
-                                    public void actionPerformed(ActionEvent e) {
-                                        floorView.trans.changeTranslate(500,0);
-                                    }
-                                });
-        moveRight= new JButton("Move Right");
-        moveRight.addActionListener(new ActionListener() {
-                                    public void actionPerformed(ActionEvent e) {
-                                        floorView.trans.changeTranslate(-500,0);
-                                    }
-        });
-        //
-        panel.add(zoomIn);
-        panel.add(zoomOut);
-        panel.add(moveLeft);
-        panel.add(moveRight);
-
-        this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
         //set frame dimensions
         this.setSize(MAX_X, MAX_Y);
         
@@ -92,31 +56,91 @@ class FloorPlanSystem extends JFrame {
         this.requestFocusInWindow();
         this.setVisible(true);
 
-
     }
 
     void redraw () {
-        panel.repaint();
+        floorViewPanel.repaint();
     }
 //------------------------------------------------------------------------------
 //  inner class
 //------------------------------------------------------------------------------        
-    private class ProgramAreaPanel extends JPanel {
-
+    private class FloorViewPanel extends JPanel {
+        FloorViewPanel(){
+            DisplayChangeListener myML = new DisplayChangeListener();
+            addMouseListener(myML);
+            addMouseMotionListener(myML);
+            addMouseWheelListener(myML);
+        }
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             setDoubleBuffered(true); 
             floorView.draw(g);
-            //tableView.draw(g);
-            
+            repaint();
+        }
+    }
+//------------------------------------------------------------------------------
+//  inner class
+//------------------------------------------------------------------------------
+    private class ControlPanel extends JPanel {
+        private JButton zoomIn, zoomOut, moveLeft, moveRight;
+        ControlPanel(){
+            //button stuff
+            zoomIn = new JButton("Zoom In");
+            zoomIn.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    floorView.trans.changeZoom(1.25);
+                }
+            });
+            zoomOut = new JButton("Zoom Out");
+            zoomOut.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    floorView.trans.changeZoom(0.8);
+                }
+            });
+            moveLeft = new JButton("Move Left");
+            moveLeft.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    floorView.trans.changeTranslate(500,0);
+                }
+            });
+            moveRight= new JButton("Move Right");
+            moveRight.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    floorView.trans.changeTranslate(-500,0);
+                }
+            });
+            //
+            this.add(zoomIn);
+            this.add(zoomOut);
+            this.add(moveLeft);
+            this.add(moveRight);
+
+        }
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            setDoubleBuffered(true);
+            repaint();
+        }
+    }
+//------------------------------------------------------------------------------
+//  inner class
+//------------------------------------------------------------------------------
+    private class TableViewPanel extends JPanel {
+        TableViewPanel(){
+
+        }
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            setDoubleBuffered(true);
+            tableView.draw(g);
             repaint();
         }
     }
 //------------------------------------------------------------------------------
 //  inner class
 //------------------------------------------------------------------------------     
-    private class MyMouseListener implements MouseListener {
-        int xClicked, yClicked, xReleased, yReleased;
+    private class DisplayChangeListener implements MouseListener, MouseMotionListener, MouseWheelListener {
+        int xClicked, yClicked, xReleased, yReleased, currentX, currentY;
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {}
 
@@ -130,12 +154,30 @@ class FloorPlanSystem extends JFrame {
         public void mouseReleased(MouseEvent mouseEvent) {
             xReleased = mouseEvent.getX();
             yReleased = mouseEvent.getY();
-            floorView.trans.changeTranslate(xClicked-xReleased,yClicked-yReleased);
+            floorView.trans.changeTranslate((xReleased-xClicked),(yReleased-yClicked));
         }
         @Override
         public void mouseEntered(MouseEvent mouseEvent) {}
 
         @Override
         public void mouseExited(MouseEvent mouseEvent) {}
+
+        @Override
+        public void mouseDragged(MouseEvent mouseEvent){}
+
+        @Override
+        public void mouseMoved(MouseEvent mouseEvent){
+            currentX = mouseEvent.getX();
+            currentY = mouseEvent.getY();
+        }
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
+            if (mouseWheelEvent.getWheelRotation()<0){
+                floorView.trans.changeZoom(1.25, currentX, currentY);
+            } else if (mouseWheelEvent.getWheelRotation()>0){
+                floorView.trans.changeZoom(0.8, currentX, currentY);
+            }
+        }
     }
 }
