@@ -14,6 +14,7 @@ class FloorPlanSystem extends JFrame {
     static FloorPlanSystem floor;
     static FloorViewPanel floorViewPanel;
     static ControlPanel controlPanel;
+    static TableViewPanel tableViewPanel;
     static ArrayList<Table> tables;
     static FloorView floorView;
     static TableView tableView;
@@ -43,11 +44,27 @@ class FloorPlanSystem extends JFrame {
         JPanel cardContentPane = new JPanel(new CardLayout());
         floorViewPanel = new FloorViewPanel();
         controlPanel = new ControlPanel();
+        tableViewPanel = new TableView();
         floorViewPanel.add(controlPanel);
         this.setContentPane(cardContentPane);
-        this.getContentPane().add(floorViewPanel, "floorViewPanel");
-
+        this.getContentPane().add(floorViewPanel, "FLOORVIEWPANEL");
+        this.getContentPane().add(tableViewPanel, "TABLEVIEWPANEL");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+
+        JButton switchCards;
+        switchCards.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                (CardLayout)(floor.getContentPane().getLayout()).;
+            }
+        });
+        //
+        this.add(zoomIn);
+
+
+
+
         //set frame dimensions
         this.setSize(MAX_X, MAX_Y);
         
@@ -127,7 +144,6 @@ class FloorPlanSystem extends JFrame {
 //------------------------------------------------------------------------------
     private class TableViewPanel extends JPanel {
         TableViewPanel(){
-
         }
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
