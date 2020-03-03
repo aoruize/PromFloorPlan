@@ -44,26 +44,12 @@ class FloorPlanSystem extends JFrame {
         JPanel cardContentPane = new JPanel(new CardLayout());
         floorViewPanel = new FloorViewPanel();
         controlPanel = new ControlPanel();
-        tableViewPanel = new TableView();
+        tableViewPanel = new TableViewPanel();
         floorViewPanel.add(controlPanel);
         this.setContentPane(cardContentPane);
         this.getContentPane().add(floorViewPanel, "FLOORVIEWPANEL");
         this.getContentPane().add(tableViewPanel, "TABLEVIEWPANEL");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-        JButton switchCards;
-        switchCards.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                (CardLayout)(floor.getContentPane().getLayout()).;
-            }
-        });
-        //
-        this.add(zoomIn);
-
-
-
 
         //set frame dimensions
         this.setSize(MAX_X, MAX_Y);
