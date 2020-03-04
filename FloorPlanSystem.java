@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /* All ticketing system requirements: bit.ly/TicketSys
 */
 
-class FloorPlanSystem extends JFrame {
+class FloorPlanSystem extends JPanel {
     //private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
     //private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
     private final int MAX_X = 1920;
@@ -18,7 +18,6 @@ class FloorPlanSystem extends JFrame {
     static FloorPlanSystem floor;
     static FloorViewPanel floorViewPanel;
     static ControlPanel controlPanel;
-    static TableViewPanel tableViewPanel;
     static ArrayList<Table> tables;
     static FloorView floorView;
     static TableView tableView;
@@ -27,7 +26,7 @@ class FloorPlanSystem extends JFrame {
     public static void main(String[] args) {
         tables = new ArrayList<Table>();
         for (int i = 0; i<15; i++){
-            Table t = new Table(1,1,1);
+            Table t = new Table(1);
             ArrayList<Student> students = new ArrayList<Student>();
             for (int j = 0; j<5; j++){
                 Student s = new Student("","");
@@ -51,18 +50,12 @@ class FloorPlanSystem extends JFrame {
 
     FloorPlanSystem(ArrayList<Table> myTables) {
         this.tables = myTables;
-        super("FloorPlanSystem");
         floorView = new FloorView(MAX_X, MAX_Y, tables);
         //create a cardlayout top layer frame and add it to the frame
-        JPanel cardContentPane = new JPanel(new CardLayout());
         floorViewPanel = new FloorViewPanel();
         controlPanel = new ControlPanel();
-        tableViewPanel = new TableViewPanel();
         floorViewPanel.add(controlPanel);
-        this.setContentPane(cardContentPane);
-        this.getContentPane().add(floorViewPanel, "FLOORVIEWPANEL");
-        this.getContentPane().add(tableViewPanel, "TABLEVIEWPANEL");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(floorViewPanel);
 
         //set frame dimensions
         this.setSize(MAX_X, MAX_Y);
@@ -73,10 +66,12 @@ class FloorPlanSystem extends JFrame {
         this.setVisible(true);
 
     }
-
-    void redraw () {
-        floorViewPanel.repaint();
+    public void paintComponent(Graphics g) {
+        setDoubleBuffered(true);
+        floorView.draw(g);
+        repaint();
     }
+
 //------------------------------------------------------------------------------
 //  inner class
 //------------------------------------------------------------------------------        
@@ -89,9 +84,6 @@ class FloorPlanSystem extends JFrame {
         }
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            setDoubleBuffered(true); 
-            floorView.draw(g);
-            repaint();
         }
     }
 //------------------------------------------------------------------------------
@@ -138,19 +130,7 @@ class FloorPlanSystem extends JFrame {
             repaint();
         }
     }
-//------------------------------------------------------------------------------
-//  inner class
-//------------------------------------------------------------------------------
-    private class TableViewPanel extends JPanel {
-        TableViewPanel(){
-        }
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            setDoubleBuffered(true);
-            tableView.draw(g);
-            repaint();
-        }
-    }
+
 //------------------------------------------------------------------------------
 //  inner class
 //------------------------------------------------------------------------------     
