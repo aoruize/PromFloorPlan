@@ -46,10 +46,11 @@ class FloorPlanSystem extends JFrame {
             tables.add(t);
         }
 
-        floor = new FloorPlanSystem();
-    }    
-    
-    FloorPlanSystem() {
+        floor = new FloorPlanSystem(tables);
+    }
+
+    FloorPlanSystem(ArrayList<Table> myTables) {
+        this.tables = myTables;
         super("FloorPlanSystem");
         floorView = new FloorView(MAX_X, MAX_Y, tables);
         //create a cardlayout top layer frame and add it to the frame
