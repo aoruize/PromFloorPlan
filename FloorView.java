@@ -6,7 +6,6 @@ class FloorView {
     private int xSize, ySize, width, height, tableRadius;
     public Transformations trans;
     ArrayList<Table> tables;
-    ArrayList
     FloorView(int width, int height, ArrayList<Table> tables) {
         this.width = width;
         this.height = height;
