@@ -1,9 +1,12 @@
+import javafx.scene.shape.Circle;
+
 import java.awt.*;
 import java.util.ArrayList;
 class FloorView {
     private int xSize, ySize, width, height, tableRadius;
     public Transformations trans;
     ArrayList<Table> tables;
+    ArrayList
     FloorView(int width, int height, ArrayList<Table> tables) {
         this.width = width;
         this.height = height;
@@ -16,7 +19,7 @@ class FloorView {
     public void draw(Graphics g){
 
         for (int i = 0; i < tables.size(); i++){
-            g.setColor(Color.BLACK);
+            g.setColor(Color.GREEN);
             //Table//
             int xCoord = trans.applyXTranslate((i%xSize + 1)*(width/(xSize+1)));
             int yCoord = trans.applyYTranslate((i/xSize + 1)*(height/(ySize+1)));
@@ -27,9 +30,9 @@ class FloorView {
             //Seats//
             ArrayList<Student> students;
             students = tables.get(i).getStudents();
-            g.setColor(Color.GREEN);
             for (int j = 0; j < students.size(); j++){
-                MyUtil.drawCircle(g,(int)(xCoord + newTableRadius * Math.cos(j* 2*Math.PI/students.size())), (int)(yCoord + newTableRadius* Math.sin(j* 2*Math.PI/students.size())), newTableRadius/5);
+                Student s = students.get(j);
+                MyUtil.drawPerson(g, s.getPicture(), (int)(xCoord + newTableRadius * Math.cos(j* 2*Math.PI/students.size())), (int)(yCoord + newTableRadius* Math.sin(j* 2*Math.PI/students.size())), newTableRadius/2);
             }
             ////
         }

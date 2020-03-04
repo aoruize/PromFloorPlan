@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /* All ticketing system requirements: bit.ly/TicketSys
@@ -18,16 +22,24 @@ class FloorPlanSystem extends JFrame {
     static ArrayList<Table> tables;
     static FloorView floorView;
     static TableView tableView;
-    static Table table;
 
     //main
     public static void main(String[] args) {
         tables = new ArrayList<Table>();
-        for (int i = 0; i<45; i++){
+        for (int i = 0; i<15; i++){
             Table t = new Table(1,1,1);
             ArrayList<Student> students = new ArrayList<Student>();
-            for (int j = 0; j<9; j++){
+            for (int j = 0; j<5; j++){
                 Student s = new Student("","");
+                String cwd = new File("").getAbsolutePath();
+                String imagestring = cwd + "\\photos\\person" + j + ".jpg";
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File(imagestring));
+                } catch (IOException e) {
+                    System.out.println("failed");
+                }
+                s.setPicture(img);
                 students.add(s);
             }
             t.setStudents(students);
