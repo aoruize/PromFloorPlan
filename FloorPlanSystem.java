@@ -21,10 +21,11 @@ class FloorPlanSystem extends JPanel {
     static FloorPlanSystem rootPanel;
 
     FloorPlanSystem(ArrayList<Table> myTables) {
-        /*
+
         this.rootPanel = this;
         this.setLayout(new CardLayout());
         this.tables = myTables;
+        /*
         for (int i = 0; i<50; i++) {
             Table t = new Table(1);
             for (int j = 0; j<9; j++){
