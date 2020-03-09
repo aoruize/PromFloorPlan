@@ -1,4 +1,4 @@
-public class Transformations {
+class Transformations {
     private int xCentre;
     private int yCentre;
     private int xTransform;

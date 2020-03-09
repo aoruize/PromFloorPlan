@@ -1,75 +1,104 @@
 import java.util.ArrayList;
 
-class Table {
-
+/**
+ * Student class required for Prom Project. Used by TicketingSystem
+ * @see TicketingSystem
+ * @see Student
+ * @author Daksh & Matthew
+ */
+public class Table {
     private int size;
+    private ArrayList<Student> students;
     private int x;
     private int y;
-    private ArrayList<Student> students;
 
-    Table(int size, int x, int y) {
-        setX(x);
-        setY(y);
-        setSize(size);
+    /**
+     * Constructor for table.
+     * @param size The max number of students a table can have.
+     */
+    Table(int size){
+        this.size = size;
+        this.students = new ArrayList<Student>();
     }
 
-    Table(int size, int x, int y, ArrayList<Student> students) {
-        setX(x);
-        setY(y);
-        setSize(size);
-        setStudents(students);
-    }
-
+    /**
+     * Gets the tables max size.
+     * @return The max size of the table.
+     */
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    /**
+     * Gets the students seated at the table.
+     * @return Students seated at the table.
+     */
     public ArrayList<Student> getStudents() {
         return students;
     }
 
+    /**
+     * Sets the students seated at the table.
+     * @param students Students seated at the table.
+     */
     public void setStudents(ArrayList<Student> students) {
         this.students = students;
     }
 
-    public void addStudent(Student s) {
-        students.add(s);
+    /**
+     * Gets the X coordinate of the table.
+     * @return The X coordinate.
+     */
+    public int getX() {
+        return x;
     }
 
-    public void removeStudent(Student s) {
-        students.remove(s);
+    /**
+     * Sets the X coordinate of the table.
+     * @param x The X coordinate.
+     */
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public boolean isFull() {
-        if (students.size() == size) {
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * Gets the Y coordinate of the table.
+     * @return The Y coordinate.
+     */
+    public int getY() {
+        return y;
     }
 
-    public boolean containsStudent(Student s) { 
-        if (students.contains(s)) {
+    /**
+     * Sets the Y coordinate of the table.
+     * @param y The Y coordinate.
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * Adds a student to the table.
+     * @param student The student that has to be added.
+     */
+    public void addStudent(Student student){
+        students.add(student);
+    }
+
+    /**
+     * Removes a student from the table.
+     * @param student The student that has to be removed.
+     */
+    public void removeStudent(Student student){
+        students.remove(student);
+    }
+
+    /**
+     * Checks if the table is full or not.
+     * @return True if the table is full.
+     */
+    public boolean isFull(){
+        if (this.students.size() >= this.size){
             return true;
         } else {
             return false;
