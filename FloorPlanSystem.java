@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import static java.awt.BorderLayout.*;
 
-/* All ticketing system requirements: bit.ly/TicketSys
+/**
+ * FloorPlan.class
+ * Main panel
+ * @author Mike
  */
-
 class FloorPlanSystem extends JPanel {
     private final int MAX_X = (int)getToolkit().getScreenSize().getWidth();
     private final int MAX_Y = (int)getToolkit().getScreenSize().getHeight();
@@ -20,21 +21,17 @@ class FloorPlanSystem extends JPanel {
     static TableView tableView;
     static FloorPlanSystem rootPanel;
 
+    /**
+     * FloorPlanSystem
+     * constructor for FloorPlanSystem
+     * @param myTables ArrayList of tables to be made into floor plan
+     */
     FloorPlanSystem(ArrayList<Table> myTables) {
-
+        //ref to
         this.rootPanel = this;
         this.setLayout(new CardLayout());
         this.tables = myTables;
-        /*
-        for (int i = 0; i<50; i++) {
-            Table t = new Table(1);
-            for (int j = 0; j<9; j++){
-                Student s = new Student("Mike", "0001");
-                t.addStudent(s);
-            }
-            myTables.add(t);
-        }
-        */
+
         floorView = new FloorView(MAX_X, MAX_Y, tables);
         floorViewPanel = new FloorViewPanel(floorView);
         floorControlPanel = new FloorControlPanel(floorView);
@@ -249,9 +246,11 @@ class FloorPlanSystem extends JPanel {
             }
         }
     }
-    //------------------------------------------------------------------------------
-    //  inner class
-    //------------------------------------------------------------------------------
+
+    /**
+     * TableViewListener
+     *
+     */
     private class TableViewListener implements MouseListener{
         int xClicked, yClicked;
         TableView thisTableView;
@@ -291,9 +290,12 @@ class FloorPlanSystem extends JPanel {
         public void mouseExited(MouseEvent mouseEvent) {}
 
     }
-    //------------------------------------------------------------------------------
-    //  inner class
-    //------------------------------------------------------------------------------
+
+    /**
+     * TableInfoPanel
+     * A panel to display information about a specific table
+     * @author Mike
+     */
     private class TableInfoPanel extends JPanel {
         private Table thisTable;
         private JButton detailedView;
@@ -301,28 +303,38 @@ class FloorPlanSystem extends JPanel {
         private String studentsString = "Students: ";
         private String accommodationsString = "Accommodations: ";
         private JLabel studentsLabel, accommodationsLabel;
+
+        /**
+         * Constructor for TableInfoPanel
+         * @param t table to display into about
+         */
         TableInfoPanel(Table t){
             this.thisTable = t;
             this.setVisible(true);
+            //Builds string of student names
             studentList = thisTable.getStudents();
             for (Student s: studentList){
                 studentsString += s.getName() + " ";
                 ArrayList<String> sa = s.getAccommodations();
                 if (!sa.isEmpty()){
+                    //builds string of accomodations
                     for (String accom : sa){
-                        accommodationsString += sa + " ";
+                        accommodationsString += sa + ", ";
                     }
+                    accommodationsString = accommodationsString.substring(0,accommodationsString.length()-2);
                 }
             }
+            //if no accomodations, get rid of
             if (accommodationsString.equals("Accommodations: ")){
                 accommodationsString += "N/A";
             }
-
+            //add labels
             studentsLabel = new JLabel(studentsString);
             this.add(studentsLabel);
-
             accommodationsLabel = new JLabel(accommodationsString);
             this.add(accommodationsLabel);
+
+            //create and add button that switches to table view
             detailedView = new JButton("See Table Details");
             detailedView.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -338,9 +350,12 @@ class FloorPlanSystem extends JPanel {
         public void paintComponent(Graphics g) {
         }
     }
-    //------------------------------------------------------------------------------
-    //  inner class
-    //------------------------------------------------------------------------------
+
+    /**
+     * StudentInfoPanel
+     * panel to draw information about a student, when they are clicked
+     * @author Mike
+     */
     private class StudentInfoPanel extends JPanel {
         private Student thisStudent;
         private String infoString = "";
@@ -354,12 +369,19 @@ class FloorPlanSystem extends JPanel {
             if (!sa.isEmpty()){
                 infoString += "Accomodations: ";
                 for (String accom : sa){
-                    infoString += accom + " ";
+                    infoString += accom + ", ";
                 }
+                infoString = infoString.substring(0,infoString.length()-2);
             }
             infoLabel = new JLabel(infoString);
             this.add(infoLabel);
         }
+
+        /**
+         * paintComponent
+         * empty override
+         * @param g Graphics
+         */
         @Override
         public void paintComponent(Graphics g) {
         }
