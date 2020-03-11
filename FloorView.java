@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author Mike
  */
 public class FloorView {
-    private int xSize, ySize, width, height, tableRadius, studentRadius;
+    private int xSize, ySize, width, height, tableRadius;
     private Transformations trans;
     private ArrayList<Table> tables;
     FloorView(int aWidth, int aHeight, ArrayList<Table> tablesList) {
